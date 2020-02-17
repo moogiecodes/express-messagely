@@ -33,7 +33,7 @@ describe("Test User class", async function () {
     let isValid = await User.authenticate("test", "password");
     expect(isValid).toBeTruthy();
 
-    isValid =  await User.authenticate("test", "xxx");
+    isValid = await User.authenticate("test", "xxx");
     expect(isValid).toBeFalsy();
   });
 
@@ -66,6 +66,7 @@ describe("Test User class", async function () {
       username: "test",
       first_name: "Test",
       last_name: "Testy",
+      phone: "+14155550000"
     }]);
   });
 });
@@ -135,6 +136,6 @@ describe("Test messages part of User class", async function () {
   });
 });
 
-afterAll(async function() {
+afterAll(async function () {
   await db.end();
 });
