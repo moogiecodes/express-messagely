@@ -1,3 +1,12 @@
+const express = require("express");
+
+const User = require("../models/user");
+const Message = require("../models/message")
+const db = require("../db");
+const { authenticateJWT } = require("../middleware/auth");
+const config = require("../config");
+const router = new express.Router();
+
 /** GET / - get list of users.
  *
  * => {users: [{username, first_name, last_name, phone}, ...]}
@@ -32,3 +41,5 @@
  *                 to_user: {username, first_name, last_name, phone}}, ...]}
  *
  **/
+
+ module.exports = router;

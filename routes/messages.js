@@ -1,3 +1,12 @@
+const express = require("express");
+
+const User = require("../models/user");
+const Message = require("../models/message")
+const db = require("../db");
+const { authenticateJWT } = require("../middleware/auth");
+const config = require("../config");
+const router = new express.Router();
+
 /** GET /:id - get detail of message.
  *
  * => {message: {id,
@@ -28,3 +37,4 @@
  *
  **/
 
+module.exports = router;

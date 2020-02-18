@@ -39,8 +39,8 @@ class User {
     const result = await db.query(
       `SELECT password 
         FROM users WHERE username = $1`, [username]);
-
     const user = result.rows[0]; //if user exists in db 
+
     if (user) {
       if (await bcrypt.compare(password, user.password) === true) {
         return true;
