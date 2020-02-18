@@ -13,6 +13,14 @@ const router = new express.Router();
  *
  **/
 
+router.get("/", async function (req, res, next) {
+  try {
+    const users = await User.all();
+    return res.json({ users });
+  } catch (err) {
+    return next(err);
+  }
+});
 
 /** GET /:username - get detail of users.
  *
@@ -42,4 +50,4 @@ const router = new express.Router();
  *
  **/
 
- module.exports = router;
+module.exports = router;
