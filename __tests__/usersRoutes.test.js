@@ -41,6 +41,7 @@ describe("Users Routes Test", async function () {
           username: "test1",
           first_name: "Test1",
           last_name: "Testy1",
+          phone: "+14155550000"
         }
       ]
     });
@@ -68,12 +69,12 @@ describe("Users Routes Test", async function () {
       });
     });
 
-    test("401 on missing user", async function () {
+    test("404 on missing user", async function () {
       let response = await request(app)
         .get("/users/wrong")
         .send({ _token: testUserToken });
 
-      expect(response.statusCode).toEqual(401);
+      expect(response.statusCode).toEqual(404);
     });
   });
 });
@@ -153,8 +154,8 @@ describe("User Messages Routes Test", async function () {
 
     test("401 on wrong auth", async function () {
       let response = await response(app)
-        .get("/users/test1/to"
-          .send({ _token: "wrong" });
+        .get("/users/test1/to")
+        .send({ _token: "wrong" });
 
       expect(response.statusCode).toEqual(401);
     });
@@ -186,11 +187,11 @@ describe("User Messages Routes Test", async function () {
       });
     });
 
-    test("401 on non-existent user", async function () {
+    test("404 on non-existent user", async function () {
       let response = await request(app)
         .get("/users/wrong/from")
         .send({ _token: testUserToken });
-      expect(response.statusCode).toEqual(401);
+      expect(response.statusCode).toEqual(404);
     });
 
     test("401 on wrong auth", async function () {
