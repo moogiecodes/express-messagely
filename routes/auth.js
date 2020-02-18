@@ -21,7 +21,7 @@ router.post("/login", async function (req, res, next) {
     if (await User.authenticate(username, password) === true) {
 
       let token = jwt.sign({ username }, SECRET_KEY);
-      await User.updateLoginTimestamp(user);
+      await User.updateLoginTimestamp(username);
 
       return res.json({ token });
     }
@@ -31,8 +31,6 @@ router.post("/login", async function (req, res, next) {
   }
 });
 
-// User.register?
-// CHECK IF USER EXISTS IN DB
 /** POST /register - register user: registers, logs in, and returns token.
  *
  * {username, password, first_name, last_name, phone} => {token}.
@@ -42,8 +40,16 @@ router.post("/login", async function (req, res, next) {
 
  router.post("/register", async function (req, res, next) {
   try {
+    const { username, password, first_name, last_name, phone } = req.body;
 
-    
+    if (await User.register({ username, password, first_name, last_name, phone })){
+      let token = jwt.sign({ username }, SECRET_KEY);
+      await User.updateLoginTimestamp(username);
+      
+      return res.json({ token });
+    }
+    throw newExpressError("Invalid user/password", 400);
+
   } catch (err){
     return next(err);
   }

@@ -29,7 +29,7 @@ class User {
             VALUES ($1, $2, $3, $4, $5, current_timestamp, current_timestamp)
             RETURNING username, password, first_name, last_name, phone`,
       [username, hashedPassword, first_name, last_name, phone]);
-
+    // console.log(result.rows[0])
     return result.rows[0];
   }
 
@@ -40,12 +40,19 @@ class User {
       `SELECT password 
         FROM users WHERE username = $1`, [username]);
     const user = result.rows[0]; //if user exists in db 
-
+    
+    // if we can find record in DB
     if (user) {
       if (await bcrypt.compare(password, user.password) === true) {
         return true;
       }
-      return false;
+    } else {
+      throw new ExpressError(`Invalid credentials.`, 400);
+    }
+
+    // if user exists in DB
+    if (!user.username){
+      throw new ExpressError(`Invalid credentials.`, 400);
     }
   }
 

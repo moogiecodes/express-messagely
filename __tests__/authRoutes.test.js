@@ -24,7 +24,7 @@ describe("Auth Routes Test", async function () {
   /** POST /auth/register => token  */
 
   describe("POST /auth/register", function () {
-    xtest("can register", async function () {
+    test("can register", async function () {
       let response = await request(app)
         .post("/auth/register")
         .send({
@@ -58,14 +58,14 @@ describe("Auth Routes Test", async function () {
       });
     });
 
-    xtest("won't login w/wrong password", async function () {
+    test("won't login w/wrong password", async function () {
       let response = await request(app)
         .post("/auth/login")
         .send({ username: "test1", password: "WRONG" });
       expect(response.statusCode).toEqual(400);
     });
 
-    xtest("won't login w/wrong password", async function () {
+    test("won't login w/wrong password", async function () {
       let response = await request(app)
         .post("/auth/login")
         .send({ username: "not-user", password: "password" });
